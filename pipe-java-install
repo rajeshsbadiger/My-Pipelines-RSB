@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Install-Java') {
+            steps {
+                sh 'sudo apt update -y'
+                sh 'sudo apt install fontconfig openjdk-21-jre'
+            }
+        }
+        stage('Deploy-java') {
+            stpes {
+                sh 'sudo java -version'
+                sh 'sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key'
+                sh 'echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null'
+                sh 'sudo apt update -y'
+            }
+        }
+        stage('Java-version') {
+            steps {
+                sh 'sudo java -version'
+            }
+        }
+    }
+}
