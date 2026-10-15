@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Nginx-INstall') {
+            steps {
+                sh 'sudo apt update -y'
+                sh 'sudo apt install nginx -y'
+            }
+        }
+        stage('Deploy-index') {
+            steps {
+                sh 'sudo echo "Welcome to YG minds... Only MOCK interview is the key to success!!" > index.html'
+                sh 'sudo mv index.html /var/www/html/index.html'
+            }
+        }
+        stage('Ngins-stop') {
+            steps {
+                sh 'sudo systemctl stop nginx'
+            }
+        }
+        stage('Start Nginx') {
+            steps {
+                sh 'sudo systemctl start nginx'
+            }
+        }
+    }
+}
